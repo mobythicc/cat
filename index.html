@@ -26,8 +26,7 @@
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const emojis = ["😺", "🧶"];
-            const gravity = 0.2;
-            const bounceFactor = 0.7;
+            const bounceFactor = 1;
             const initialCats = 1;
 
             class BouncingEmoji {
@@ -38,13 +37,12 @@
                     document.body.appendChild(this.element);
                     this.x = x;
                     this.y = y;
-                    this.vx = Math.random() * 2 - 1;
-                    this.vy = Math.random() * 2 - 1;
+                    this.vx = (Math.random() * 2 - 1) * 2;
+                    this.vy = (Math.random() * 2 - 1) * 2;
                     this.update();
                 }
 
                 update() {
-                    this.vy += gravity;
                     this.x += this.vx;
                     this.y += this.vy;
 
