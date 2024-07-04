@@ -6,40 +6,94 @@
     <title>Hello World with Cats</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: Comic Sans MS, cursive, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #f0f0f0;
+            background-color: #000;
             margin: 0;
+            overflow: hidden;
+            color: #fff;
         }
         .container {
             text-align: center;
-            background-color: #ffffff;
+            background-color: #ff00ff;
             padding: 20px;
             border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 20px rgba(255, 0, 255, 0.9);
+            animation: rotate 5s linear infinite;
         }
         .cat-emoji {
             font-size: 2em;
+            animation: color-change 1s infinite;
         }
         .hello-world {
             font-size: 3em;
             margin: 20px 0;
+            animation: flash 2s infinite;
+        }
+        @keyframes color-change {
+            0% {color: red;}
+            25% {color: yellow;}
+            50% {color: green;}
+            75% {color: blue;}
+            100% {color: red;}
+        }
+        @keyframes flash {
+            0%, 100% {opacity: 1;}
+            50% {opacity: 0;}
+        }
+        @keyframes rotate {
+            0% {transform: rotate(0deg);}
+            100% {transform: rotate(360deg);}
+        }
+        .advertisement {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: yellow;
+            color: red;
+            padding: 10px;
+            border: 2px solid red;
+            animation: bounce 2s infinite;
+        }
+        .donate {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background: lime;
+            color: blue;
+            padding: 10px;
+            border: 2px solid blue;
+            animation: pulse 1s infinite;
+        }
+        @keyframes bounce {
+            0%, 100% {transform: translateY(0);}
+            50% {transform: translateY(-20px);}
+        }
+        @keyframes pulse {
+            0%, 100% {transform: scale(1);}
+            50% {transform: scale(1.1);}
         }
     </style>
 </head>
 <body>
+    <div class="advertisement">AD: Buy Now!</div>
     <div class="container">
         <div class="cat-emoji">😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺</div>
         <div class="hello-world">Hello World</div>
         <div class="cat-emoji">😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺</div>
     </div>
+    <div class="donate">Donate Now!</div>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            // JavaScript to add more interactivity if needed
             console.log("Page loaded and ready!");
+            // More interactivity can be added here
+            let container = document.querySelector('.container');
+            container.addEventListener('click', function() {
+                alert('Thanks for visiting!');
+            });
         });
     </script>
 </body>
