@@ -3,80 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hello World with Cats</title>
+    <title>Bouncy Cats and Yarn</title>
     <style>
         body {
             font-family: Comic Sans MS, cursive, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
             background-color: #000;
             margin: 0;
             overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+            position: relative;
             color: #fff;
         }
-        .container {
-            text-align: center;
-            background-color: #ff00ff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(255, 0, 255, 0.9);
-            animation: rotate 5s linear infinite;
-        }
-        .cat-emoji {
-            font-size: 2em;
-            animation: color-change 1s infinite;
-        }
-        .hello-world {
-            font-size: 3em;
-            margin: 20px 0;
-            animation: flash 2s infinite;
-        }
-        @keyframes color-change {
-            0% {color: red;}
-            25% {color: yellow;}
-            50% {color: green;}
-            75% {color: blue;}
-            100% {color: red;}
-        }
-        @keyframes flash {
-            0%, 100% {opacity: 1;}
-            50% {opacity: 0;}
-        }
-        @keyframes rotate {
-            0% {transform: rotate(0deg);}
-            100% {transform: rotate(360deg);}
-        }
-        .advertisement {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            background: yellow;
-            color: red;
-            padding: 10px;
-            border: 2px solid red;
-            animation: bounce 2s infinite;
-        }
-        .donate {
-            position: absolute;
-            bottom: 10px;
-            right: 10px;
-            background: lime;
-            color: blue;
-            padding: 10px;
-            border: 2px solid blue;
-            animation: pulse 1s infinite;
-        }
-        @keyframes bounce {
-            0%, 100% {transform: translateY(0);}
-            50% {transform: translateY(-20px);}
-        }
-        @keyframes pulse {
-            0%, 100% {transform: scale(1);}
-            50% {transform: scale(1.1);}
-        }
-        .cat-cursor {
+        .cat {
             position: absolute;
             font-size: 2em;
             pointer-events: none;
@@ -84,28 +23,59 @@
     </style>
 </head>
 <body>
-    <div class="advertisement">AD: Buy Now!</div>
-    <div class="container">
-        <div class="cat-emoji">😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺</div>
-        <div class="hello-world">Hello World</div>
-        <div class="cat-emoji">😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺</div>
-    </div>
-    <div class="donate">Donate Now!</div>
-    <div class="cat-cursor">😺</div>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            console.log("Page loaded and ready!");
+            const emojis = ["😺", "🧶"];
+            const gravity = 0.2;
+            const bounceFactor = 0.7;
+            const initialCats = 1;
 
-            let container = document.querySelector('.container');
-            container.addEventListener('click', function() {
-                alert('Thanks for visiting!');
-            });
+            class BouncingEmoji {
+                constructor(x, y) {
+                    this.element = document.createElement('div');
+                    this.element.className = 'cat';
+                    this.element.innerText = "😺";
+                    document.body.appendChild(this.element);
+                    this.x = x;
+                    this.y = y;
+                    this.vx = Math.random() * 2 - 1;
+                    this.vy = Math.random() * 2 - 1;
+                    this.update();
+                }
 
-            let catCursor = document.querySelector('.cat-cursor');
-            document.addEventListener('mousemove', function(e) {
-                catCursor.style.left = e.pageX + 'px';
-                catCursor.style.top = e.pageY + 'px';
-            });
+                update() {
+                    this.vy += gravity;
+                    this.x += this.vx;
+                    this.y += this.vy;
+
+                    if (this.x + this.element.offsetWidth > window.innerWidth || this.x < 0) {
+                        this.vx *= -bounceFactor;
+                        this.x = this.x < 0 ? 0 : window.innerWidth - this.element.offsetWidth;
+                        this.duplicate();
+                    }
+
+                    if (this.y + this.element.offsetHeight > window.innerHeight || this.y < 0) {
+                        this.vy *= -bounceFactor;
+                        this.y = this.y < 0 ? 0 : window.innerHeight - this.element.offsetHeight;
+                        this.duplicate();
+                    }
+
+                    this.element.style.left = this.x + 'px';
+                    this.element.style.top = this.y + 'px';
+                    requestAnimationFrame(this.update.bind(this));
+                }
+
+                duplicate() {
+                    if (Math.random() < 0.1) { // 10% chance to turn into yarn
+                        this.element.innerText = emojis[1];
+                    }
+                    new BouncingEmoji(this.x, this.y);
+                }
+            }
+
+            for (let i = 0; i < initialCats; i++) {
+                new BouncingEmoji(Math.random() * window.innerWidth, Math.random() * window.innerHeight);
+            }
         });
     </script>
 </body>
