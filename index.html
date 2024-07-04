@@ -76,6 +76,11 @@
             0%, 100% {transform: scale(1);}
             50% {transform: scale(1.1);}
         }
+        .cat-cursor {
+            position: absolute;
+            font-size: 2em;
+            pointer-events: none;
+        }
     </style>
 </head>
 <body>
@@ -86,13 +91,20 @@
         <div class="cat-emoji">😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺😺</div>
     </div>
     <div class="donate">Donate Now!</div>
+    <div class="cat-cursor">😺</div>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             console.log("Page loaded and ready!");
-            // More interactivity can be added here
+
             let container = document.querySelector('.container');
             container.addEventListener('click', function() {
                 alert('Thanks for visiting!');
+            });
+
+            let catCursor = document.querySelector('.cat-cursor');
+            document.addEventListener('mousemove', function(e) {
+                catCursor.style.left = e.pageX + 'px';
+                catCursor.style.top = e.pageY + 'px';
             });
         });
     </script>
