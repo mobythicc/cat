@@ -3,78 +3,92 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bouncy Cats and Yarn</title>
+    <title>Bouncing Circles</title>
     <style>
-        body {
-            font-family: Comic Sans MS, cursive, sans-serif;
+        canvas {
+            display: block;
+            margin: 0 auto;
             background-color: #000;
-            margin: 0;
-            overflow: hidden;
-            height: 100vh;
-            width: 100vw;
-            position: relative;
-            color: #fff;
-        }
-        .cat {
-            position: absolute;
-            font-size: 2em;
-            pointer-events: none;
         }
     </style>
 </head>
 <body>
+    <canvas id="canvas"></canvas>
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const emojis = ["😺", "🧶"];
-            const bounceFactor = 1;
-            const initialCats = 1;
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
 
-            class BouncingEmoji {
-                constructor(x, y) {
-                    this.element = document.createElement('div');
-                    this.element.className = 'cat';
-                    this.element.innerText = "😺";
-                    document.body.appendChild(this.element);
-                    this.x = x;
-                    this.y = y;
-                    this.vx = (Math.random() * 2 - 1) * 2;
-                    this.vy = (Math.random() * 2 - 1) * 2;
-                    this.update();
-                }
-
-                update() {
-                    this.x += this.vx;
-                    this.y += this.vy;
-
-                    if (this.x + this.element.offsetWidth > window.innerWidth || this.x < 0) {
-                        this.vx *= -bounceFactor;
-                        this.x = this.x < 0 ? 0 : window.innerWidth - this.element.offsetWidth;
-                        this.duplicate();
-                    }
-
-                    if (this.y + this.element.offsetHeight > window.innerHeight || this.y < 0) {
-                        this.vy *= -bounceFactor;
-                        this.y = this.y < 0 ? 0 : window.innerHeight - this.element.offsetHeight;
-                        this.duplicate();
-                    }
-
-                    this.element.style.left = this.x + 'px';
-                    this.element.style.top = this.y + 'px';
-                    requestAnimationFrame(this.update.bind(this));
-                }
-
-                duplicate() {
-                    if (Math.random() < 0.1) { // 10% chance to turn into yarn
-                        this.element.innerText = emojis[1];
-                    }
-                    new BouncingEmoji(this.x, this.y);
-                }
+        class Circle {
+            constructor(x, y, radius, color, dx, dy) {
+                this.x = x;
+                this.y = y;
+                this.radius = radius;
+                this.color = color;
+                this.dx = dx;
+                this.dy = dy;
             }
 
-            for (let i = 0; i < initialCats; i++) {
-                new BouncingEmoji(Math.random() * window.innerWidth, Math.random() * window.innerHeight);
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+                ctx.fillStyle = this.color;
+                ctx.fill();
+                ctx.closePath();
             }
-        });
+
+            update() {
+                this.x += this.dx;
+                this.y += this.dy;
+
+                // Bounce off the walls
+                if (this.x + this.radius > canvas.width || this.x - this.radius < 0) {
+                    this.dx = -this.dx;
+                    circles.push(new Circle(this.x, this.y, this.radius, this.color, -this.dx, this.dy));
+                }
+                if (this.y + this.radius > canvas.height || this.y - this.radius < 0) {
+                    this.dy = -this.dy;
+                    circles.push(new Circle(this.x, this.y, this.radius, this.color, this.dx, -this.dy));
+                }
+
+                // Collision detection
+                for (let i = 0; i < circles.length; i++) {
+                    if (this !== circles[i] && this.color !== circles[i].color) {
+                        const dx = this.x - circles[i].x;
+                        const dy = this.y - circles[i].y;
+                        const distance = Math.sqrt(dx * dx + dy * dy);
+
+                        if (distance < this.radius + circles[i].radius) {
+                            if (Math.random() < 0.5) {
+                                circles.splice(circles.indexOf(this), 1);
+                            } else {
+                                circles.splice(i, 1);
+                            }
+                            break;
+                        }
+                    }
+                }
+
+                this.draw();
+            }
+        }
+
+        const circles = [
+            new Circle(100, 100, 20, 'red', 2, 2),
+            new Circle(200, 200, 20, 'blue', -2, -2)
+        ];
+
+        function animate() {
+            requestAnimationFrame(animate);
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            for (let i = 0; i < circles.length; i++) {
+                circles[i].update();
+            }
+        }
+
+        animate();
     </script>
 </body>
 </html>
