@@ -1,24 +1,56 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: "Verdana", sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
+    background-color: #101010;
+    color: #f0f0f0;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 header {
-    background-color: #333;
-    color: #fff;
+    background-color: #ff0000;
+    padding: 10px 0;
     text-align: center;
-    padding: 1rem 0;
+}
+
+header h1 {
+    margin: 0;
+    font-family: "Impact", sans-serif;
+    font-size: 2.5rem;
+    color: #fff;
+    text-shadow: 2px 2px #000;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0 0;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+nav ul li a:hover {
+    text-decoration: underline;
 }
 
 main {
-    margin: 20px auto;
-    max-width: 800px;
+    background-color: #202020;
     padding: 20px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    margin-top: 20px;
 }
 
 .upload-section, .gallery-section {
@@ -26,7 +58,10 @@ main {
 }
 
 h2 {
-    color: #333;
+    font-family: "Impact", sans-serif;
+    font-size: 1.8rem;
+    border-bottom: 2px solid #ff0000;
+    padding-bottom: 5px;
 }
 
 #upload-form {
@@ -37,20 +72,41 @@ h2 {
 
 #upload-form input, #upload-form button {
     padding: 10px;
-    border: 1px solid #ccc;
+    border: 2px solid #ff0000;
     border-radius: 4px;
+    background-color: #303030;
+    color: #fff;
+    font-size: 1rem;
+}
+
+#upload-form button {
+    cursor: pointer;
 }
 
 #image-gallery {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
+    justify-content: center;
 }
 
 #image-gallery img {
     width: 100px;
     height: 100px;
     object-fit: cover;
-    border: 2px solid #ccc;
+    border: 2px solid #ff0000;
     border-radius: 4px;
+}
+
+footer {
+    background-color: #ff0000;
+    padding: 10px 0;
+    text-align: center;
+    margin-top: 20px;
+}
+
+footer p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #fff;
 }
