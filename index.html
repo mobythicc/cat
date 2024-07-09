@@ -8,9 +8,20 @@
 </head>
 <body>
     <header>
-        <h1>Image Sharing Forum</h1>
+        <div class="container">
+            <h1>Image Sharing Forum</h1>
+            <nav>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Gallery</a></li>
+                    <li><a href="#">Upload</a></li>
+                    <li><a href="#">Forum</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
     </header>
-    <main>
+    <main class="container">
         <section class="upload-section">
             <h2>Upload an Image</h2>
             <form id="upload-form">
@@ -23,6 +34,11 @@
             <div id="image-gallery"></div>
         </section>
     </main>
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Image Sharing Forum. All rights reserved.</p>
+        </div>
+    </footer>
     <script src="script.js"></script>
 </body>
 </html>
