@@ -1,20 +1,26 @@
 const popupMessages = [
     {
+        title: "System Alert",
+        content: "Your computer is running low on memory. Click OK to free up some space."
+    },
+    {
+        title: "Virus Detected",
+        content: "A virus has been detected on your computer. Click OK to remove it."
+    },
+    {
         title: "Congratulations!",
-        content: "You've won a free iPhone! Click here to claim your prize."
-    },
-    {
-        title: "Limited Time Offer!",
-        content: "Get 50% off on male performance pills. Buy now!"
-    },
-    {
-        title: "Urgent Message",
-        content: "Your computer is infected with a virus. Click here to fix it."
+        content: "You've won a free gift card. Click OK to claim your prize."
     }
 ];
 
 function createPopup() {
+    console.log("Creating popup...");
     const popupContainer = document.getElementById('popup-container');
+    if (!popupContainer) {
+        console.error("Popup container not found!");
+        return;
+    }
+
     const popup = document.createElement('div');
     popup.className = 'popup';
 
@@ -22,7 +28,7 @@ function createPopup() {
     popup.innerHTML = `
         <div class="title">${randomMessage.title}</div>
         <div class="content">${randomMessage.content}</div>
-        <div class="button">Close</div>
+        <button class="button">OK</button>
     `;
 
     popup.querySelector('.button').addEventListener('click', () => {
@@ -37,29 +43,6 @@ function createPopup() {
     popup.style.top = `${randomY}px`;
 
     popup.style.display = 'block';
-
-    createPrompt(randomX + 20, randomY + 150);
-}
-
-function createPrompt(x, y) {
-    const prompt = document.createElement('div');
-    prompt.className = 'prompt';
-
-    prompt.innerHTML = `
-        <div class="title">Windows XP</div>
-        <div class="message">Are you sure you want to proceed?</div>
-        <div class="button">OK</div>
-    `;
-
-    prompt.querySelector('.button').addEventListener('click', () => {
-        prompt.style.display = 'none';
-    });
-
-    prompt.style.left = `${x}px`;
-    prompt.style.top = `${y}px`;
-    prompt.style.display = 'block';
-
-    document.body.appendChild(prompt);
 }
 
 function randomInterval() {
@@ -69,9 +52,11 @@ function randomInterval() {
 }
 
 function initiatePopups() {
+    console.log("Initiating popups...");
     setInterval(createPopup, randomInterval());
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+    console.log("Document loaded. Starting popups...");
     initiatePopups();
 });
