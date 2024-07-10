@@ -32,18 +32,19 @@ body {
     position: absolute;
     background-color: #f0f0f0;
     color: black;
-    border: 2px solid #a9a9a9;
+    border: 2px solid #00008b;
     padding: 10px;
     width: 300px;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
     z-index: 1000;
     display: none;
+    font-family: "Tahoma", sans-serif;
 }
 
 .popup .title {
     font-weight: bold;
     margin-bottom: 10px;
-    background-color: #0078d7;
+    background-color: #00008b;
     color: white;
     padding: 5px;
     text-align: center;
@@ -52,58 +53,21 @@ body {
 .popup .content {
     margin-bottom: 10px;
     padding: 5px;
+    background: url('https://i.imgur.com/3pQqC0g.png') no-repeat left center;
+    background-size: 24px;
+    padding-left: 30px;
 }
 
 .popup .button {
-    display: block;
-    margin: 10px auto;
-    padding: 5px;
-    background-color: #0078d7;
-    color: white;
-    text-align: center;
-    cursor: pointer;
-    width: 60px;
-    border: none;
-    border-radius: 3px;
-    text-align: center;
-}
-
-.prompt {
-    position: absolute;
-    background-color: #f0f0f0;
+    display: inline-block;
+    margin: 5px 10px 0 0;
+    padding: 5px 15px;
+    background-color: #e1e1e1;
+    border: 1px solid #a5a5a5;
     color: black;
-    border: 2px solid #a9a9a9;
-    padding: 20px;
-    width: 300px;
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
-    z-index: 999;
-    display: none;
-}
-
-.prompt .title {
-    font-weight: bold;
-    margin-bottom: 10px;
-    background-color: #0078d7;
-    color: white;
-    padding: 5px;
-    text-align: center;
-}
-
-.prompt .message {
-    margin-bottom: 20px;
-    padding: 5px;
-}
-
-.prompt .button {
-    display: block;
-    margin: 0 auto;
-    padding: 5px;
-    background-color: #0078d7;
-    color: white;
     text-align: center;
     cursor: pointer;
-    width: 60px;
-    border: none;
-    border-radius: 3px;
-    text-align: center;
+    border-radius: 2px;
+    float: right;
 }
+
