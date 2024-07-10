@@ -1,7 +1,7 @@
 const popupMessages = [
     {
-        title: "System Alert",
-        content: "Your computer is running low on memory. Click OK to free up some space."
+        title: "Critical Error",
+        content: "You have no brain cells left."
     },
     {
         title: "Virus Detected",
@@ -12,6 +12,8 @@ const popupMessages = [
         content: "You've won a free gift card. Click OK to claim your prize."
     }
 ];
+
+let activePopups = [];
 
 function createPopup() {
     console.log("Creating popup...");
@@ -33,16 +35,31 @@ function createPopup() {
 
     popup.querySelector('.button').addEventListener('click', () => {
         popup.style.display = 'none';
+        activePopups = activePopups.filter(p => p !== popup);
     });
 
     popupContainer.appendChild(popup);
 
-    const randomX = Math.floor(Math.random() * (window.innerWidth - 300));
-    const randomY = Math.floor(Math.random() * (window.innerHeight - 200));
+    let randomX, randomY, overlaps;
+    do {
+        overlaps = false;
+        randomX = Math.floor(Math.random() * (window.innerWidth - 320));
+        randomY = Math.floor(Math.random() * (window.innerHeight - 160));
+        for (const p of activePopups) {
+            const rect = p.getBoundingClientRect();
+            if (rect.left < randomX + 320 && rect.left + 320 > randomX &&
+                rect.top < randomY + 160 && rect.top + 160 > randomY) {
+                overlaps = true;
+                break;
+            }
+        }
+    } while (overlaps);
+
     popup.style.left = `${randomX}px`;
     popup.style.top = `${randomY}px`;
-
     popup.style.display = 'block';
+
+    activePopups.push(popup);
 }
 
 function randomInterval() {
