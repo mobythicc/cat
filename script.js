@@ -40,10 +40,61 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+    class Decoration {
+        constructor(x, y, type) {
+            this.x = x;
+            this.y = y;
+            this.type = type;
+        }
+
+        draw() {
+            if (this.type === 'seaweed') {
+                ctx.fillStyle = 'green';
+                ctx.beginPath();
+                ctx.moveTo(this.x, this.y);
+                for (let i = 0; i < 5; i++) {
+                    ctx.quadraticCurveTo(this.x - 10, this.y - 20, this.x, this.y - 40);
+                    ctx.quadraticCurveTo(this.x + 10, this.y - 20, this.x, this.y);
+                    this.y -= 40;
+                }
+                ctx.fill();
+            } else if (this.type === 'rock') {
+                ctx.fillStyle = 'gray';
+                ctx.beginPath();
+                ctx.ellipse(this.x, this.y, 30, 20, 0, 0, 2 * Math.PI);
+                ctx.fill();
+            }
+        }
+    }
+
     const fishes = Array.from({ length: 10 }, () => new Fish());
+    const decorations = [
+        new Decoration(100, fishTankHeight - 50, 'seaweed'),
+        new Decoration(300, fishTankHeight - 30, 'rock'),
+        new Decoration(500, fishTankHeight - 50, 'seaweed'),
+        new Decoration(700, fishTankHeight - 30, 'rock')
+    ];
+
+    function createBubble(x, y) {
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
+        ctx.beginPath();
+        ctx.arc(x, y, 10, 0, 2 * Math.PI);
+        ctx.fill();
+        setTimeout(() => {
+            ctx.clearRect(x - 10, y - 10, 20, 20);
+        }, 2000);
+    }
+
+    canvas.addEventListener('click', (e) => {
+        const rect = canvas.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        createBubble(x, y);
+    });
 
     function animate() {
         ctx.clearRect(0, 0, fishTankWidth, fishTankHeight);
+        decorations.forEach(deco => deco.draw());
         fishes.forEach(fish => {
             fish.move();
             fish.draw();
@@ -53,3 +104,4 @@ document.addEventListener("DOMContentLoaded", () => {
 
     animate();
 });
+
