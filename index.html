@@ -3,18 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Scam Site Simulation</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>2D Fish Tank Simulation</title>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #87CEEB; /* Sky blue background */
+        }
+        #fishTank {
+            position: relative;
+            width: 800px;
+            height: 600px;
+            background-color: #1E90FF; /* Deep blue water */
+            overflow: hidden;
+            border: 5px solid #000;
+        }
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+    </style>
 </head>
 <body>
-    <div class="video-background">
-        <video autoplay muted loop id="bg-video">
-            <source src="https://cdn.pixabay.com/video/2023/11/05/187970-881517500_large.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
+    <div id="fishTank">
+        <canvas id="fishCanvas" width="800" height="600"></canvas>
     </div>
-    <div class="popup-container" id="popup-container"></div>
-    <script src="script.js"></script>
+    <script src="fishTank.js"></script>
 </body>
 </html>
-
