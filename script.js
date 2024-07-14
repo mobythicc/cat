@@ -15,6 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         draw() {
+            console.log(`Drawing fish at (${this.x}, ${this.y}) with size ${this.size} and color ${this.color}`);
             ctx.fillStyle = this.color;
             ctx.beginPath();
             ctx.ellipse(this.x, this.y, this.size, this.size / 2, 0, 0, 2 * Math.PI);
