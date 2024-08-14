@@ -1,108 +1,64 @@
-document.addEventListener("DOMContentLoaded", () => {
-    const canvas = document.getElementById('fishCanvas');
-    const ctx = canvas.getContext('2d');
-    const fishTankWidth = canvas.width;
-    const fishTankHeight = canvas.height;
+const fishContainer = document.getElementById('fish-container');
+const bubblesContainer = document.getElementById('bubbles');
 
-    class Fish {
-        constructor() {
-            this.x = Math.random() * fishTankWidth;
-            this.y = Math.random() * fishTankHeight;
-            this.speedX = (Math.random() - 0.5) * 4;
-            this.speedY = (Math.random() - 0.5) * 4;
-            this.size = 20 + Math.random() * 30;
-            this.color = `hsl(${Math.random() * 360}, 100%, 50%)`;
-        }
+const fishEmojis = ['🐟', '🐠', '🐡', '🐬', '🐳'];
+const fishNames = ['Nemo', 'Dory', 'Marlin', 'Bubbles', 'Bruce', 'Coral', 'Finn', 'Gill', 'Splash', 'Sunny'];
+const numFish = 10;
 
-        draw() {
-            console.log(`Drawing fish at (${this.x}, ${this.y}) with size ${this.size} and color ${this.color}`);
-            ctx.fillStyle = this.color;
-            ctx.beginPath();
-            ctx.ellipse(this.x, this.y, this.size, this.size / 2, 0, 0, 2 * Math.PI);
-            ctx.fill();
-            ctx.beginPath();
-            ctx.moveTo(this.x - this.size, this.y);
-            ctx.lineTo(this.x - this.size - 10, this.y - 10);
-            ctx.lineTo(this.x - this.size - 10, this.y + 10);
-            ctx.closePath();
-            ctx.fill();
-        }
+// Create fish
+for (let i = 0; i < numFish; i++) {
+    const fish = document.createElement('div');
+    fish.className = 'fish';
+    fish.textContent = fishEmojis[Math.floor(Math.random() * fishEmojis.length)];
+    fish.style.top = `${Math.random() * 80 + 10}%`;
+    fish.style.animationDuration = `${Math.random() * 5 + 5}s`;
+    
+    const name = document.createElement('span');
+    name.style.fontSize = '0.5rem';
+    name.style.marginLeft = '5px';
+    name.style.color = 'white';
+    name.textContent = fishNames[Math.floor(Math.random() * fishNames.length)];
+    
+    fish.appendChild(name);
+    fishContainer.appendChild(fish);
+}
 
-        move() {
-            this.x += this.speedX;
-            this.y += this.speedY;
+// Create bubbles
+setInterval(() => {
+    const bubble = document.createElement('div');
+    bubble.className = 'bubble';
+    bubble.style.left = `${Math.random() * 100}%`;
+    bubble.style.width = `${Math.random() * 20 + 5}px`;
+    bubble.style.height = bubble.style.width;
+    bubble.style.animationDuration = `${Math.random() * 5 + 3}s`;
+    bubblesContainer.appendChild(bubble);
 
-            if (this.x <= 0 || this.x >= fishTankWidth) {
-                this.speedX *= -1;
-            }
-            if (this.y <= 0 || this.y >= fishTankHeight) {
-                this.speedY *= -1;
-            }
-        }
-    }
+    setTimeout(() => {
+        bubble.remove();
+    }, 8000);
+}, 1000);
+// Drop food on click
+document.getElementById('tank').addEventListener('click', (event) => {
+    const food = document.createElement('div');
+    food.className = 'food';
+    food.style.left = `${event.clientX}px`;
+    food.style.top = `${event.clientY}px`;
+    document.getElementById('tank').appendChild(food);
 
-    class Decoration {
-        constructor(x, y, type) {
-            this.x = x;
-            this.y = y;
-            this.type = type;
-        }
-
-        draw() {
-            if (this.type === 'seaweed') {
-                ctx.fillStyle = 'green';
-                ctx.beginPath();
-                ctx.moveTo(this.x, this.y);
-                for (let i = 0; i < 5; i++) {
-                    ctx.quadraticCurveTo(this.x - 10, this.y - 20, this.x, this.y - 40);
-                    ctx.quadraticCurveTo(this.x + 10, this.y - 20, this.x, this.y);
-                    this.y -= 40;
-                }
-                ctx.fill();
-            } else if (this.type === 'rock') {
-                ctx.fillStyle = 'gray';
-                ctx.beginPath();
-                ctx.ellipse(this.x, this.y, 30, 20, 0, 0, 2 * Math.PI);
-                ctx.fill();
-            }
-        }
-    }
-
-    const fishes = Array.from({ length: 10 }, () => new Fish());
-    const decorations = [
-        new Decoration(100, fishTankHeight - 50, 'seaweed'),
-        new Decoration(300, fishTankHeight - 30, 'rock'),
-        new Decoration(500, fishTankHeight - 50, 'seaweed'),
-        new Decoration(700, fishTankHeight - 30, 'rock')
-    ];
-
-    function createBubble(x, y) {
-        ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
-        ctx.beginPath();
-        ctx.arc(x, y, 10, 0, 2 * Math.PI);
-        ctx.fill();
+    // Make fish swim to food
+    const fishes = document.querySelectorAll('.fish');
+    fishes.forEach(fish => {
+        const fishRect = fish.getBoundingClientRect();
+        const angle = Math.atan2(event.clientY - fishRect.top, event.clientX - fishRect.left);
+        fish.style.transform = `rotate(${angle}rad)`;
+        fish.style.animation = 'none'; // Stop swimming animation
+        
         setTimeout(() => {
-            ctx.clearRect(x - 10, y - 10, 20, 20);
+            fish.style.animation = ''; // Restart swimming animation
         }, 2000);
-    }
-
-    canvas.addEventListener('click', (e) => {
-        const rect = canvas.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        createBubble(x, y);
     });
 
-    function animate() {
-        ctx.clearRect(0, 0, fishTankWidth, fishTankHeight);
-        decorations.forEach(deco => deco.draw());
-        fishes.forEach(fish => {
-            fish.move();
-            fish.draw();
-        });
-        requestAnimationFrame(animate);
-    }
-
-    animate();
+    setTimeout(() => {
+        food.remove();
+    }, 3000);
 });
-
