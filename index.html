@@ -3,35 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shlong</title>
-    <style>
-        body {
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #87CEEB; /* Sky blue background */
-        }
-        #fishTank {
-            position: relative;
-            width: 800px;
-            height: 600px;
-            background-color: #1E90FF; /* Deep blue water */
-            overflow: hidden;
-            border: 5px solid #000;
-        }
-        canvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-        }
-    </style>
+    <title>Fishtank</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div id="fishTank">
-        <canvas id="fishCanvas" width="800" height="600"></canvas>
+    <div id="tank">
+        <div id="bubbles"></div>
+        <div id="fish-container"></div>
     </div>
-    <script src="fishTank.js"></script>
+
+    <script src="script.js"></script>
 </body>
 </html>
