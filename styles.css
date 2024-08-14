@@ -1,73 +1,62 @@
-body {
+body, html {
     margin: 0;
     padding: 0;
+    height: 100%;
     overflow: hidden;
-    background-color: black;
-    color: white;
-    font-family: Arial, sans-serif;
+    background-color: #0077be;
 }
 
-.video-background {
-    position: fixed;
-    top: 0;
-    left: 0;
+#tank {
+    position: relative;
     width: 100%;
     height: 100%;
     overflow: hidden;
-    z-index: -1;
 }
 
-#bg-video {
+.fish {
     position: absolute;
-    top: 50%;
-    left: 50%;
+    font-size: 2rem;
+    animation: swim 10s infinite linear;
+    display: flex;
+    align-items: center;
+}
+
+@keyframes swim {
+    from { transform: translateX(-100%); }
+    to { transform: translateX(100%); }
+}
+
+#bubbles {
+    position: absolute;
     width: 100%;
     height: 100%;
-    -webkit-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
-    object-fit: cover;
+    pointer-events: none;
+    overflow: hidden;
 }
 
-.popup {
+.bubble {
     position: absolute;
-    background-color: #f0f0f0;
-    color: black;
-    border: 2px solid #00008b;
-    padding: 10px;
-    width: 300px;
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
-    z-index: 1000;
-    display: none;
-    font-family: "Tahoma", sans-serif;
+    bottom: -50px;
+    width: 20px;
+    height: 20px;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 50%;
+    animation: rise 5s infinite ease-in;
 }
 
-.popup .title {
-    font-weight: bold;
-    margin-bottom: 10px;
-    background-color: #00008b;
-    color: white;
-    padding: 5px;
-    text-align: center;
+@keyframes rise {
+    to { transform: translateY(-100%); opacity: 0; }
 }
 
-.popup .content {
-    margin-bottom: 10px;
-    padding: 5px;
-    background: url('https://i.imgur.com/3pQqC0g.png') no-repeat left center;
-    background-size: 24px;
-    padding-left: 30px;
+.food {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: brown;
+    border-radius: 50%;
+    animation: drop 1s forwards;
 }
 
-.popup .button {
-    display: inline-block;
-    margin: 5px 10px 0 0;
-    padding: 5px 15px;
-    background-color: #e1e1e1;
-    border: 1px solid #a5a5a5;
-    color: black;
-    text-align: center;
-    cursor: pointer;
-    border-radius: 2px;
-    float: right;
+@keyframes drop {
+    to { transform: translateY(100%); opacity: 0; }
 }
-
