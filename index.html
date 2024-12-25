@@ -5,18 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>shlong.org</title>
     <style>
-        /* Set the main background image */
         body {
             margin: 0;
             padding: 0;
             background: url('logs195.jpg') repeat;
-            background-size: cover;
+            background-size: 390px 390px;
             overflow: hidden;
             position: relative;
         }
-
-        /* Add the snowflake GIF as an overlay */
-        .snowflake-layer {
+        
+        .snowflakes {
             position: fixed;
             top: 0;
             left: 0;
@@ -24,29 +22,42 @@
             height: 100%;
             background: url('snow01.gif') repeat;
             z-index: 1;
-            pointer-events: none; /* Ensures it's not interactive */
+            pointer-events: none;
         }
 
-        /* Center the video */
         video {
-            position: absolute;
+            position: fixed;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 50%;
+            width: 60%;
             height: auto;
             z-index: 2;
         }
+        
     </style>
-</head>
+    </head>
 <body>
-    <!-- Snowflake GIF Layer -->
-    <div class="snowflake-layer"></div>
-
-    <!-- The video -->
-    <video autoplay loop>
+    
+    <div class="snowflakes"></div>
+    <video id="autoplay-video" autoplay loop>
         <source src="Christmas_with_DOOM.mp4" type="video/mp4">
         Your browser does not support the video tag.
+        
     </video>
+    <script>
+        const video = document.getElementById('autoplay-video');
+        video.play().catch(error => {
+            console.log('Autoplay with audio was blocked by the browser. Attempting workaround.');
+            setTimeout(() => {
+                video.muted = true;
+                video.play().then(() => {
+                    video.muted = false;
+                }).catch(err => {
+                    console.log('Autoplay workaround failed:', err);
+                });
+            }, 500);
+        });
+    </script>
 </body>
 </html>
