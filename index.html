@@ -3,15 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fishtank</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>shlong.org</title>
+    <style>
+        /* Set the main background image */
+        body {
+            margin: 0;
+            padding: 0;
+            background: url('logs195.jpg') repeat;
+            background-size: cover;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Add the snowflake GIF as an overlay */
+        .snowflake-layer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('snow01.gif') repeat;
+            z-index: 1;
+            pointer-events: none; /* Ensures it's not interactive */
+        }
+
+        /* Center the video */
+        video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            height: auto;
+            z-index: 2;
+        }
+    </style>
 </head>
 <body>
-    <div id="tank">
-        <div id="bubbles"></div>
-        <div id="fish-container"></div>
-    </div>
+    <!-- Snowflake GIF Layer -->
+    <div class="snowflake-layer"></div>
 
-    <script src="script.js"></script>
+    <!-- The video -->
+    <video autoplay muted loop>
+        <source src="Christmas_with_DOOM.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
 </body>
 </html>
