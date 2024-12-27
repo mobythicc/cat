@@ -14,8 +14,8 @@
             position: relative;
         }
 
-             #gif-container {
-            position: relative;
+        #gif-container {
+            position: absolute;
             width: 100%;
             height: 100%;
             overflow: hidden;
@@ -23,18 +23,7 @@
 
         .gif {
             position: absolute;
-            width: 100px; /* Adjust size as needed */
             pointer-events: none;
-            animation: fadeOut 3s forwards; /* Fade out after playing */
-        }
-
-        @keyframes fadeOut {
-            0% {
-                opacity: 1;
-            }
-            100% {
-                opacity: 0;
-            }
         }
     </style>
 </head>
@@ -43,12 +32,9 @@
 
     <script>
         // Paths to GIF files
-        const gifURLs = ["twinkle.gif", "twinkle1.gif"]; 
+        const gifURLs = ["twinkle.gif", "twinkle1.gif", "shootingstar.gif"]; 
 
-        // Number of random GIFs to display
-        const maxGifs = 20;
-
-        // Function to create a random GIF element
+        // Function to create and display a random GIF element
         function createRandomGif() {
             const container = document.getElementById("gif-container");
 
@@ -57,7 +43,7 @@
             gif.src = gifURLs[Math.floor(Math.random() * gifURLs.length)]; // Select random GIF
             gif.className = "gif";
 
-            // Randomize position
+            // Randomize position on the screen
             const randomX = Math.random() * window.innerWidth;
             const randomY = Math.random() * window.innerHeight;
 
@@ -67,11 +53,26 @@
             // Add the GIF to the container
             container.appendChild(gif);
 
-            // Remove the GIF after it finishes playing
+            // Remove the GIF after it finishes playing (assuming ~3s for most GIFs)
             setTimeout(() => {
                 gif.remove();
-            }, 3000); // Adjust to match GIF duration
+            }, 3000); // Adjust to match the GIF's duration (in milliseconds)
         }
+
+        // Function to randomly generate a GIF every few seconds
+        function generateRandomGif() {
+            createRandomGif(); // Display a random GIF
+
+            // Generate a new random GIF at a random interval (between 1 and 4 seconds)
+            setTimeout(generateRandomGif, Math.random() * 3000 + 1000);
+        }
+
+        // Start generating GIFs
+        generateRandomGif();
+    </script>
+</body>
+</html>
+
 
         // Function to randomly generate GIFs at intervals
         function generateRandomGifs() {
