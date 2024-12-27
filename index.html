@@ -12,68 +12,66 @@
             background-size: 390px 390px;
             overflow: hidden;
             position: relative;
-            z-index:
         }
 
         #gif-container {
-            position: absolute;
+            position: relative;
             width: 100%;
             height: 100%;
             overflow: hidden;
-            z-index: 1;
+            z-index: 1; /* Ensure it's above other elements */
         }
 
         .gif {
             position: absolute;
+            width: 100px; /* Adjust size as needed */
             pointer-events: none;
+            z-index: 9999; /* Ensure GIF is on top of everything */
         }
     </style>
 </head>
 <body>
     <div id="gif-container"></div>
-    <div style="width: 50px; height: 50px; background-color: red;">
-        
-    </div>
-    <script>
- 
-        const gifURLs = ["twinkle.gif", "twinkle1.gif"]; 
 
-   
+    <script>
+        // Paths to GIF files
+        const gifURLs = ["twinkle.gif", "twinkle1.gif", "shootingstar.gif"]; 
+
+        // Function to create a random GIF element
         function createRandomGif() {
             const container = document.getElementById("gif-container");
 
             // Create a new GIF element
             const gif = document.createElement("img");
-            gif.src = gifURLs[Math.floor(Math.random() * gifURLs.length)]; 
+            gif.src = gifURLs[Math.floor(Math.random() * gifURLs.length)]; // Select random GIF
             gif.className = "gif";
 
-      
-            const randomX = Math.random() * window.innerWidth;
-            const randomY = Math.random() * window.innerHeight;
+            // Randomize position within the viewport
+            const randomX = Math.random() * (window.innerWidth - 100); // Subtract width of the GIF
+            const randomY = Math.random() * (window.innerHeight - 100); // Subtract height of the GIF
 
             gif.style.left = `${randomX}px`;
             gif.style.top = `${randomY}px`;
 
-  
+            // Add the GIF to the container
             container.appendChild(gif);
 
-       
+            // Remove the GIF after it finishes playing
             setTimeout(() => {
                 gif.remove();
-            }, 3000); 
+            }, 3000); // Adjust to match GIF duration
         }
 
-
-        function generateRandomGif() {
-            createRandomGif(); 
-
-        
-            setTimeout(generateRandomGif, Math.random() * 8000 + 4000);
+        // Function to randomly generate GIFs at intervals
+        function generateRandomGifs() {
+            // Create a new GIF every 1-4 seconds
+            setInterval(createRandomGif, Math.random() * 3000 + 1000);
         }
 
         // Start generating GIFs
-        generateRandomGif();
+        generateRandomGifs();
     </script>
 </body>
 </html>
+
 
